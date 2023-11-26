@@ -1,2 +1,2 @@
 # FreeLoaderInjector
-Typical Process Injection using Opened Handle Process, Opened Memory Space and User Token 
+Typical Process Injection using Opened Handle Process, RWX Memory Space and User Token 
