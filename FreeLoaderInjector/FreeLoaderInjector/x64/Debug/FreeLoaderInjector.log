@@ -14,5 +14,5 @@ S:\MalwareDeveloped\FreeLoaderInjector\FreeLoaderInjector\FreeLoaderInjector\Map
 S:\MalwareDeveloped\FreeLoaderInjector\FreeLoaderInjector\FreeLoaderInjector\MapMemoryObjects.h(265,18): warning C4101: 'status': unreferenced local variable
 S:\MalwareDeveloped\FreeLoaderInjector\FreeLoaderInjector\FreeLoaderInjector\MapMemoryObjects.h(267,15): warning C4101: 'objectNameInfo': unreferenced local variable
 S:\MalwareDeveloped\FreeLoaderInjector\FreeLoaderInjector\FreeLoaderInjector\MapMemoryObjects.h(269,24): warning C4101: 'objectName': unreferenced local variable
-S:\MalwareDeveloped\FreeLoaderInjector\FreeLoaderInjector\FreeLoaderInjector\FreeLoaderInjector.cpp(126,11): warning C4101: 'mAddress': unreferenced local variable
+S:\MalwareDeveloped\FreeLoaderInjector\FreeLoaderInjector\FreeLoaderInjector\FreeLoaderInjector.cpp(119,11): warning C4101: 'mAddress': unreferenced local variable
   FreeLoaderInjector.vcxproj -> S:\MalwareDeveloped\FreeLoaderInjector\FreeLoaderInjector\x64\Debug\FreeLoaderInjector.exe
